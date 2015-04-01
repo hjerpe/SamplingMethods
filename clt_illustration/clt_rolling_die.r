@@ -1,25 +1,26 @@
-# Example illustrating the CLT when picking uniformly distributed
+# Example illustrating the CLT theorem when drawing uniformly distributed
 # numbers from 1 to 6
 
 mean_uniformly_rvs <- function(n_rvs) {
-    # Returns the mean of the outcomes of a set of uniformly discrete
-    # distributed R.V., i.e. S = 1/N sum X_i
+    # Returns the outcome given by the  mean of the outcomes of a set of
+    # uniformly discrete distributed R.V.,
+    # i.e. the outcome of the r.v. S = 1/N sum X_i
     #
     # Args:
-    # n_samples: Number of R.V. whose outcome to compute mean from
+    # n_rvs: Number of R.V. used when computing the mean outcome of Sn
     # Returns:
-    # The aritmethic mean of the outcomes of the R.V.
+    # The outcome of Sn
 
     random_numbers <- sample.int(6, size=n_rvs, replace=TRUE)
     return(mean(random_numbers))
 }
 
 z_samples <- function(n_rvs, n_samples) {
-    # Returns n_samples samples of the R.V. Z = sqrt(n) * (Sn/n - mu), by CLT,
-    # Z -> N(0, sigma2) in distribution as n -> \infty
+    # Returns n_samples samples of the R.V. Z = sqrt(n) * (Sn/n - mu),
+    # by CLT, Z -> N(0, sigma2) in distribution as n -> \infty
     # 
     # Args:
-    # n_rvs: Number of R.V. in the arithmetic mean Sn/n
+    # n_rvs: Number of R.V. used when computing the mean outcome of Sn
     # n_samples: Number of samples to draw from Z
     # Returns:
     # Samples from Z
@@ -30,13 +31,13 @@ z_samples <- function(n_rvs, n_samples) {
     return(Z)
 }
 
-my_plot <- function(data, x_lab) {
-    # Function returns histogram with prob=TRUE, and # samples as xlabel
-    # combined with a density plot of N(0, sigma2)
+my_plot <- function(z_samples, x_lab) {
+    # Function plots the normalized histogram, and the number of  samples
+    # used for Sn as xlabel combined with a density plot of N(0, sigma2)
     #
     # ARGS:
-    # data: z_samples for histogram, MEAN IS PRECOMPUTED
-    # x_lab: number of variables used in the sum Sn 
+    # z_samples: List of draws from the r.v. Z (see z_samples)
+    # x_lab: number of variables used in the sum Sn
     
     sigma2 <- 2.9
     breaks <- 400
@@ -48,11 +49,12 @@ my_plot <- function(data, x_lab) {
       col='blue')
 }
 
-# Illustrate CLT sqrt(n) * (Sn/n - mean(X)) -> Z(0, sigma2) in distribution,
+# Illustrate CLT thm sqrt(n) * (Sn/n - mean(X)) -> Z(0, sigma2) in distribution,
 # where Sn is sum if n iid r.v.
-n_rvs <- c(50, 250, 600, 1200, 1700, 5000) # Number of RV in arithmetic sum
-n_samples <- rep.int(4000, times=length(n_rvs))
-indices <- c(1:1:length(n_rvs)) # Lapply over multiple arguments
+
+n_rvs <- c(50, 250, 600, 1200, 1700, 5000) # Number of r.v. used for Sn
+n_samples <- rep.int(4000, times=length(n_rvs)) # Number of draws from the rv. Z
+indices <- c(1:1:length(n_rvs)) # To lapply over multiple arguments
 
 z_outcomes <- lapply(indices, function(x) z_samples(n_rvs[[x]], n_samples[[x]]))
 x_labels <- paste('No terms in arithmetic mean Sn', lapply(n_rvs, toString))
