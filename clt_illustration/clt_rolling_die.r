@@ -38,15 +38,19 @@ my_plot <- function(z_samples, x_lab) {
     # ARGS:
     # z_samples: List of draws from the r.v. Z (see z_samples)
     # x_lab: number of variables used in the sum Sn
-    
+
+    z_samples
     sigma2 <- 2.9
     breaks <- 400
     x_range = seq(from=-6, to=6, length.out=100)
-    main<- paste('N samples:', toString(length(data)), 'N breaks:', breaks)
+    main<- paste('N samples:', toString(length(z_samples)), 'N breaks:', breaks)
     
-    hist(data, prob=TRUE, xlab=x_lab, main=main, breaks=breaks)
+    # Illustrate histogram and pdf function
+    hist(z_samples, prob=TRUE, xlab=x_lab, main=main, breaks=breaks)
+    l_w <- 2
     lines(x_range, dnorm(x = x_range, mean=0, sd=sqrt(sigma2)),
-      col='blue')
+      col='blue', lwd=l_w)
+    legend('topleft', c('pdf N(0, sigma2)'), col='blue', lwd=l_w, inset=c(-0.2,0))
 }
 
 # Illustrate CLT thm sqrt(n) * (Sn/n - mean(X)) -> Z(0, sigma2) in distribution,
@@ -59,5 +63,5 @@ indices <- c(1:1:length(n_rvs)) # To lapply over multiple arguments
 z_outcomes <- lapply(indices, function(x) z_samples(n_rvs[[x]], n_samples[[x]]))
 x_labels <- paste('No terms in arithmetic mean Sn', lapply(n_rvs, toString))
 
-par(mfrow=c(2,3))
+par(mfrow=c(2,3), xpd=TRUE)
 invisible(lapply(indices, function(x) my_plot(z_outcomes[[x]], x_labels[[x]])))
