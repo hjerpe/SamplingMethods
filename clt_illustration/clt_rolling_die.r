@@ -39,7 +39,6 @@ my_plot <- function(z_samples, x_lab) {
     # z_samples: List of draws from the r.v. Z (see z_samples)
     # x_lab: number of variables used in the sum Sn
 
-    z_samples
     sigma2 <- 2.9
     breaks <- 400
     x_range = seq(from=-6, to=6, length.out=100)
