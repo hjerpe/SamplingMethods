@@ -29,5 +29,5 @@ hist(exponential_samples, breaks=250, probability=TRUE, main=plot_title,
      xlab='samples')
 lines(x_range, dexp(x_range, rate=1), col='blue', lwd=1.5)
 legend('topright', c('pdf of exp(1)'), col='blue', lwd=1.5)
-# dev.copy(png, 'pseudo_random_illustration.png')
-# dev.off()
+#dev.copy(jpeg, 'pseudo_random_illustration.jpeg')
+#dev.off()
