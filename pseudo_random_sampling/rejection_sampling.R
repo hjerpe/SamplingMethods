@@ -2,20 +2,18 @@
 
 rejection_sampling <- function(n_samples, sample_function, acceptance_bound) {
     # Returns n_samples from a random variable having the density function
-    # f where the function bound is written as
-    # function_bound = f / (K * acceptance_bound).
+    # f. Where the density function f have the bound f(x) <= K*g(x).
     
     # ARGS:
     # n_samples - Number of drawn samples.
     # sample_function - Function returning a sample with syntax
     # sample_function(1).
-    # acceptance_bound - Higher for accepting the uniform draws.
-
+    # acceptance_bound - Higher bound for accepting uniform draws,
+    # U <= f(x*) / (k*g(x*)) = acceptance_bound.
     draw_sample <- function(sample_function, acceptance_bound) {
         # Helper function that draws uniform samples until the acceptance bound
         # criteria is met.
-        draw_accepted = FALSE
-        while (draw_accepted == FALSE) {
+        while (TRUE) {
             # Draw samples
             X <- sample_function(1)
             U <- runif(n=1, min=0, max=1)
@@ -52,6 +50,5 @@ hist(beta_draws, breaks=250, probability=TRUE, main=plot_title)
 lines(beta_pdf_range, dbeta(beta_pdf_range, shape1=2, shape2=5), col='blue',
       lwd=1.5)
 legend('topright', c('pdf of Beta(2, 5)'), col='blue', lwd=1.5)
-
 # dev.copy(jpeg, 'illustration_rejection_sampling.jpeg')
 # dev.off()
