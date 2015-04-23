@@ -53,8 +53,14 @@ plot(vec_n_samples, vector_estimated_variance, type = 'l',
      xlab=x_label,
      ylab=c('Estimated variance'))
 abline(a=VARIANCE, b=0, lty=2, lwd=2, col='red')
+legend('topright', c('True variance'), col='red', lwd=2)
+dev.copy(jpeg, 'estimated_variance_self_normalized_IS.jpeg')
+dev.off()
 plot(vec_n_samples, expected_values_denominator, type = 'l',
      xlab=x_label,
      ylab=c('c'),
      main=c('Estimated normalizing constant c for exp(cos^2(x)) / c'))
 abline(a=NORMALIZING_CONSTANT, b=0, lty=2, lwd=2, col='red')
+legend('topright', c('True normalizing constant'), col='red', lwd=2)
+dev.copy(jpeg, 'estimated_normalizing_const_self_normalized_IS.jpeg')
+dev.off()
