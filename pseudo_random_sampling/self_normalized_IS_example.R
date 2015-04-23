@@ -26,7 +26,7 @@ expected_value_numerator <- function(n_samples) {
         )
     }
 
-sampling_denominator <- function(n_samples) {
+expected_value_denominator <- function(n_samples) {
     importance_sampling(
         n_samples,
         phi=function(x) { 1 },
@@ -43,7 +43,7 @@ VARIANCE <- 0.587201
 vec_n_samples <- seq(from=1, N_SAMPLES)
 
 expected_values_numerator <- mapply(vec_n_samples, FUN=expected_value_numerator)
-expected_values_denominator <- mapply(vec_n_samples, FUN=sampling_denominator)
+expected_values_denominator <- mapply(vec_n_samples, FUN=expected_value_denominator)
 
 vector_estimated_variance <- expected_values_numerator / expected_values_denominator
 
