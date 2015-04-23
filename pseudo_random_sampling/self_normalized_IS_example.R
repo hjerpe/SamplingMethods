@@ -1,20 +1,43 @@
 source('importance_sampling.R')
-importance_sampling()
-# Illustrating computing the integral of exp(cos^2(x)) using self normalized
-# importance sampling over [-pi/2, pi/2]
+# Example computing the variance of the r.v. X having the distribution
+# f = exp(cost^2(x)) / c using self-normalized importance sampling.
 
-# The integral is computed using E_g [phi(x) * w(x)] / E_g [w(x)] where
-# phi is the indicator function over the inteval [-pi/2, pi/2]
+# The variance calculated by E_f [phi(X)] = E_g [phi(X) * w(x)] / E_g [w(x)]
+# for some instrumental distribution g s.t. g = 0 implies that f = 0.
+# Where,
+# phi(x) = x^2
+# w(x) = z(x) / g(x) = cf(x) / g(x).
 
-phi = function(x) {
-    # Indicator function over [-pi/2, pi/2]
-    if (-pi/2 <= x & x <= pi/2) {
-        return (1)
-    }
-    else {
-        return (0)
-    }
+instrumental_sample_distribution <- function(n_samples) {
+    # Return n_samples samples from U(-p/2, pi/2)
+    runif(n_samples, min=-pi/2, max=pi/2)
 }
 
-seq(-pi, pi, length=10)
-phi(x_rang)
+importance_weight_function <- function(x) { (pi) * exp(cos(x)**2) }
+
+phi <- function(x) { x**2 }
+
+sampling_numerator <- function(n_samples) {
+    importance_sampling(n_samples, phi, instrumental_sample_distribution,
+                        importance_weight_function)
+    }
+
+sampling_denominator <- function(n_samples) {
+    importance_sampling(n_samples, phi=function(x) { 1 },
+                        instrumental_sample_distribution,
+                        importance_weight_function)
+    }
+
+N_SAMPLES <- 800
+NORMALIZING_CONSTANT <- 5.50843 # True normalizing constant given by WolphramAlpha
+VARIANCE <- 0.587201 # True variance given by WolphramAlpha
+x_range <- seq(from=1, N_SAMPLES)
+samples_numerator <- mapply(x_range, FUN=sampling_numerator)
+samples_denominator <- mapply(x_range, FUN=sampling_denominator)
+
+vector_variances <- samples_numerator / samples_denominator
+
+plot(x_range, vector_variances, type = 'l')
+abline(a=VARIANCE, b=0, lty=2, lwd=2, col='red')
+plot(x_range, samples_denominator, type = 'l')
+abline(a=NORMALIZING_CONSTANT, b=0, lty=2, lwd=2, col='red')
