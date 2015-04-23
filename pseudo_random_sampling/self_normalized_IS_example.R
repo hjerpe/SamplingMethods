@@ -17,18 +17,18 @@ instrumental_sample_function <- function(n_samples) {
 
 importance_weight_function <- function(x) { (pi) * exp(cos(x)**2) }
 
-expected_value_numerator <- function(summed_n_samples) {
+expected_value_numerator <- function(n_samples) {
     importance_sampling(
-        summed_n_samples,
+        n_samples,
         phi=function(x) { x**2 },
         instrumental_sample_function=instrumental_sample_function,
         importance_weight_function=importance_weight_function
         )
     }
 
-sampling_denominator <- function(summed_n_samples) {
+sampling_denominator <- function(n_samples) {
     importance_sampling(
-        summed_n_samples,
+        n_samples,
         phi=function(x) { 1 },
         instrumental_sample_function=instrumental_sample_function,
         importance_weight_function=importance_weight_function
