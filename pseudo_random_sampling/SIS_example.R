@@ -11,8 +11,8 @@
 A <- 1/5
 R <- 1/50
 S <- 1/100
-n_samples <- 5000
 
+n_samples <- 5000
 length_sequence <- 60
 
 sample_particles <- function(n_samples, particles, A, R) {
@@ -20,7 +20,7 @@ sample_particles <- function(n_samples, particles, A, R) {
 }
 
 weight_update_function <- function(observation, particle, S) {
-    pnorm(q = observation, mean = particle, sd = S)
+    pnorm(q=observation, mean=particle, sd=S)
 }
 
 generate_observations <- function(states, S) {
@@ -47,9 +47,8 @@ for (k in 1:length_sequence-1) {
         observations[k+1], particles, S)
     taus[k+1] <- sum(particles*w) / sum(w)
 }
-taus
-states
 
+# Illustrate state trajecory and means
 plot(1:length_sequence, states, type='l', lty=6, col='blue')
 points(1:length_sequence, states , col='blue')
 points(1:length_sequence, taus, type='l', lty=3, col='red')
