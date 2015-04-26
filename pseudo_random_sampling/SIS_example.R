@@ -1,4 +1,4 @@
-# Illustrating a Gaussian HMM model when estimating the filter means using
+# Illustrating a Gaussian HMM model when estimating filter means using
 # sequential importance sampling.
 
 # Y_n = X_n + S e_n
