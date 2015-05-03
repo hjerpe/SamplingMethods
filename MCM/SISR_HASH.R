@@ -1,5 +1,5 @@
 library(hash)
-# Home work computing the number of Self avoiding walks using sequential
+# Computing the number of Self avoiding walks using sequential
 # importance sampling with resampling. Where we let the instrumental
 # distribution gn = uniformly over the free neighbors of X_0:k or if there are
 # no neighbors then gn(x_k+1|x_1:k) = x_k with probability 1.
