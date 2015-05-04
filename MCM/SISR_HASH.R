@@ -1,7 +1,7 @@
 library(hash)
 # Computing the number of Self avoiding walks using sequential
-# importance sampling with resampling. Where we let the instrumental
-# distribution gn = uniformly over the free neighbors of X_0:k or if there are
+# importance sampling with resampling. Where the instrumental distribution
+# gn is uniformly over the free neighbors of X_0:k or if there are
 # no neighbors then gn(x_k+1|x_1:k) = x_k with probability 1.
 
 #### WE USE GLOBAL DATA THAT ARE ACCESSED BY VARIOUS FUCNTIONS FOR
@@ -128,9 +128,9 @@ number_of_weights_n_random_walks <- function(n_particles, length_sequence) {
     list(n_weights=list_n_weights, n_random_walks=list_n_random_walks)
 }
 # Instance model constants
-N_PARTICLES <- 3000
-LENGTH_SEQUENCE <- 400
-N_REPETITIONS <- 1
+N_PARTICLES <- 500
+LENGTH_SEQUENCE <- 3
+N_REPETITIONS <- 3
 
 # Replicate calculation N_REPETITIONS times
 list_weights_and_walks <- replicate(
@@ -146,24 +146,20 @@ cn_matrix <- matrix(
 # Filter out desired metrics that the best, largest and smallest relative
 # quotients c_est / c_n and the mean number of survived particles
 mean_survived_weights <- apply(X=weight_matrix, MARGIN=2, FUN=mean)
-# Calculate the mean of the relative quotients c_est / c_n
-quotient_cn <- cn_matrix[,1:72] / N_RW_GROUND_TRUTH[1:72]
+
+index_hb <- min(72, LENGTH_SEQUENCE)
+quotient_cn_matrix<- cn_matrix[,1:index_hb] / LIST_CN_GROUND_TRUTH[1:index_hb]
 min_cn_quotients <- apply(X=quotient_cn_matrix, MARGIN=1, FUN=min)
 max_cn_quotients <- apply(X=quotient_cn_matrix, MARGIN=1, FUN=max)
+
 abs_difference_from_one <- apply(X=quotient_cn_matrix,
                                  MARGIN=c(1,2),
                                  FUN = function(x) { abs(x-1) })
 best_indices <- apply(X=abs_difference_from_one, MARGIN=c(1), FUN=which.min)
 best_cn_quotients <- quotient_cn_matrix[cbind(1:LENGTH_SEQUENCE,
                                               best_indices[1:LENGTH_SEQUENCE])]
-min_cn_quotients_round <- unlist(
-    lapply(X=min_cn_quotients, FUN=function(x) { signif(x, 6) }))
-max_cn_quotients_round <- unlist(
-    lapply(X=max_cn_quotients, FUN=function(x) { signif(x, 6) }))
-best_cn_quotients_round <- unlist(
-    lapply(X=best_cn_quotients, FUN=function(x) { signif(x, 6) }))
 
-N_RW_GROUND_TRUTH <- c(
+LIST_CN_GROUND_TRUTH <- c(
     1, 4, 12, 36, 100, 284, 780, 2172, 5916, 16268, 44100, 
     120292, 324932, 881500, 2374444, 6416596, 17245332, 46466676, 124658732, 
     335116620, 897697164, 2408806028, 6444560484, 17266613812, 46146397316, 
