@@ -29,7 +29,7 @@ metropolis_hastings <- function(n_samples, phi, proposal_kernel,
     draw_sample <- function(X) {
         X_draw <- proposal_sample_function(X)
         acceptance_bound <- alpha(X, X_draw)
-        if runif(min=0, max=1) <= acceptance_bound X_draw else X
+        if (runif(min=0, max=1) <= acceptance_bound) X_draw else X
     }
     # Generate markov-chain and calculate the estimate of E_f [phi(X)]
     markov_chain <- replicate(expr=0, n=n_samples)
