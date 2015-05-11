@@ -22,7 +22,7 @@ importance_sampling <- function(n_samples, phi, importance_weight_function,
     # importance_weight_function - Function w used in E_g [phi(X) * w(X)].
     # instrumental_sample_function - Function returning samples having
     # distribution g outlined in the Algorithm part.
-    # RETURNS: The expected value E_g [phi(X) * w(X)].
+    # RETURNS: An estimate of the expected value E_g [phi(X) * w(X)].
 
     # COMMENTS: Valid if g = 0 implies f = 0
     # If w is chosen as f/g (x) then E_f [phi(X)] = E_g[phi(X) * w(X)].
