@@ -16,7 +16,7 @@ metropolis_hastings <- function(n_samples, phi, proposal_kernel,
     # Requirements:
     # The stationary distribution of (X_k) must conicide with the desired
     # distribution f.
-    # The chain (Xk) must converge to f irrespectively of the initial value X1
+    # The chain (Xk) must converge to f irrespectively of the initial value X1.
     # It is sufficient for the target density to only be specified up to a
     # normalizing constant i.e. target_density(x) = c * f(x).
     alpha <- function(X, X_draw) {
@@ -27,10 +27,10 @@ metropolis_hastings <- function(n_samples, phi, proposal_kernel,
     draw_sample <- function(X) {
         X_draw <- proposal_sample_function(X)
         acceptance_bound <- alpha(X, X_draw)
-        if (runif(min=0, max=1) <= acceptance_bound) X_draw else X
+        if (runif(n=1, min=0, max=1) <= acceptance_bound) X_draw else X
     }
     # Generate markov-chain and calculate the estimate of E_f [phi(X)]
     markov_chain <- replicate(expr=0, n=n_samples)
-    markov_chain <- lapply(FUN=draw_sample, X=markov_chain)
+    markov_chain <- unlist(lapply(FUN=draw_sample, X=markov_chain))
     mean(phi(markov_chain))
 }
