@@ -1,3 +1,4 @@
+source('metropolis_samples.R')
 source('metropolis_hastings.R')
 # Example computing the variance of the r.v. X having the distribution
 # f = exp(cost^2(x)) / c using the Metropolis Hasting algorithm.
@@ -18,29 +19,28 @@ proposal_sample_function <- function(x) {
 target_density <- function(x) { exp(cos(x)**2) }
 
 
-mh_estimator <- function(n_samples) {
-    metropolis_hastings(
+mh_sampler <- function(n_samples) {
+    metropolis_samples(
         n_samples,
-        phi = function(x) { x**2 },
         proposal_kernel = proposal_kernel,
         proposal_sample_function = proposal_sample_function,
         target_density = target_density)
-    }
+}
 
-N_SAMPLES_START <- 500
-N_SAMPLES <- 1000
+N_SAMPLES <- 25000
+denominators <- sequence(N_SAMPLES)
 # True normalizing constant calculated by WolphramAlpha
 NORMALIZING_CONSTANT <- 5.50843
  # True variance calculated by WolphramAlpha
 VARIANCE <- 0.587201
-vec_n_samples <- seq(from=N_SAMPLES_START, N_SAMPLES)
-
-variance_estimates <- mapply(vec_n_samples, FUN=mh_estimator)
+# Generate samples and calculate estimates
+samples <- mh_sampler(N_SAMPLES)
+variance_estimates <- cumsum(samples ** 2) / denominators
 
 
 # Plot the estimates obtained using different number of samples.
 x_label <- c('N summed samples')
-plot(vec_n_samples, variance_estimates, type = 'l', xlab=x_label,
+plot(denominators, variance_estimates, type = 'l', xlab=x_label,
      ylab=c('Estimated variance'))
 abline(a=VARIANCE, b=0, lty=2, lwd=2, col='red')
 legend('topright', c('True variance'), col='red', lwd=2)
