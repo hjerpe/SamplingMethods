@@ -1,5 +1,3 @@
-# Generate random numbers with importance sampling
-
 metropolis_hastings <- function(n_samples, phi, proposal_kernel, 
                                 proposal_sample_function, target_density) {
     # Returns an estimate of the expected value tau = E_f [phi(X)],
