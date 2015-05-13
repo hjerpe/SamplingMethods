@@ -1,10 +1,25 @@
-metropolis_hastings <- function(n_samples, phi, proposal_kernel, 
+metropolis_hastings <- function(n_samples, burn_in, phi, proposal_kernel, 
                                 proposal_sample_function, target_density) {
     # Returns an estimate of the expected value tau = E_f [phi(X)],
     # that is, the expected value of phi(X) under the density f.
-    
+    # ALGORITHM: Estimate the expected value E_f [phi(X)]
+    # draw X1 ~ Chi (Initial distribution)
+    # for i 1:N-1:
+    #   draw X_star ~ r(z|X_i)
+    #   set alpa = min(1, f(X_star) * r(X_i| X_star) / (f(X_i) * r(X_star| X_i)))
+    #   draw U ~ U(0, 1)
+    #   if U <= alpha:
+    #     X_i+1 = X_star
+    #   else:
+    #     X_i+1 X+i
+    #   end
+    # end
+    # return mean(phi(X))
+
     # ARGS:
     # n_samples - Number of samples used in the estimate tau_n.
+    # burn_in - number of starting samples to throw away,
+    # used for stabilizing the estimate.
     # phi - Function used in E_f [phi(X)].
     # proposal_kernel - transition density r(z|x).
     # proposal_sample_function - Generate samples having the conditional
@@ -12,11 +27,8 @@ metropolis_hastings <- function(n_samples, phi, proposal_kernel,
     # target_density - Needs only to be specified up to a normalizing constant
     # i.e. target_density(x) = c * f(x).
     # RETURNS: An estimate of the expected value E_f [phi(X)].
-
-    # Requirements:
-    # The stationary distribution of (X_k) must conicide with the desired
-    # distribution f.
-    # The chain (Xk) must converge to f irrespectively of the initial value X1.
+    
+    # COMMENTS:
     # It is sufficient for the target density to only be specified up to a
     # normalizing constant i.e. target_density(x) = c * f(x).
     alpha <- function(X, X_draw) {
