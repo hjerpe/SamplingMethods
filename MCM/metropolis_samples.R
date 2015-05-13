@@ -2,7 +2,8 @@ metropolis_samples <- function(n_samples, burn_in, proposal_kernel,
                                 proposal_sample_function, target_density) {
     # Returns samples Xk s.t. mean(phi(X)) estimates the expected value
     # E_f [phi(X)], that is, the expected value of phi(X) under the density f.
-    # ALGORITHM: Estimate the expected value E_f [phi(X)]
+    # ALGORITHM: Returns samples X_i s.t. mean(phi(X)) estimates the
+    # expected value E_f [phi(X)]
     # draw X1 ~ Chi (Initial distribution)
     # for i 1:N-1:
     #   draw X_star ~ r(z|X_i)
