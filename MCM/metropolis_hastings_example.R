@@ -16,7 +16,7 @@ proposal_sample_function <- function(x) {
 }
 
 
-target_density <- function(x) { exp(cos(x)**2) }
+target_density <- function(x) { exp(cos(x)**2) * (-pi/2 <= x && x <= pi/2) }
 
 
 mh_sampler <- function(n_samples) {

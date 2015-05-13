@@ -21,7 +21,7 @@ metropolis_samples <- function(n_samples, proposal_kernel,
     # normalizing constant i.e. target_density(x) = c * f(x).
     alpha <- function(X, X_draw) {
         numerator <- target_density(X) * proposal_kernel(X_draw, X)
-        min(1 , (target_density(X_draw) * proposal_kernel(X, X_draw))/ numerator)
+        min(1 , (target_density(X_draw) * proposal_kernel(X, X_draw)) / numerator)
     }
     
     draw_sample <- function(X) {
