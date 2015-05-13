@@ -11,7 +11,7 @@ metropolis_hastings <- function(n_samples, burn_in, phi, proposal_kernel,
     #   if U <= alpha:
     #     X_i+1 = X_star
     #   else:
-    #     X_i+1 X+i
+    #     X_i+1 = X+i
     #   end
     # end
     # return mean(phi(X))
