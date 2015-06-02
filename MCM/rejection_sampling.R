@@ -17,7 +17,7 @@ rejection_sampling <- function(n_samples, sample_function, acceptance_bound) {
             # Draw samples
             X <- sample_function()
             U <- runif(n=1, min=0, max=1)
-            if (U <= acceptance_bound(X)) {
+            if (U <= do.call(acceptance_bound, as.list(X))) {
                 return (X)
             }
         }
