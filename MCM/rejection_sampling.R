@@ -15,7 +15,7 @@ rejection_sampling <- function(n_samples, sample_function, acceptance_bound) {
         # criteria is met.
         while (TRUE) {
             # Draw samples
-            X <- sample_function(1)
+            X <- sample_function()
             U <- runif(n=1, min=0, max=1)
             if (U <= acceptance_bound(X)) {
                 return (X)

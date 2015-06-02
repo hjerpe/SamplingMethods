@@ -1,7 +1,7 @@
 # Illustrate drawing random samples from a Beta(2, 5) distribution, that is
 # samples having the distribution function (x*(1 - x)^4) / B(2, 5)
 source("rejection_sampling.R")
-sample_function <- function(x) return (runif(n=x, min=0, max=1))
+sample_function <- function() return (runif(n=1, min=0, max=1))
 acceptance_bound_beta <-function(x) {
     # Function defining a higher bound used when accept/reject uniform samples.
     # We accept the samples if U <= f(x*) / (k*g(x*)) = acceptance_bound_beta(x*),
