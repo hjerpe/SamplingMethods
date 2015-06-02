@@ -6,10 +6,10 @@ rejection_sampling <- function(n_samples, sample_function, acceptance_bound) {
     
     # ARGS:
     # n_samples - Number of drawn samples.
-    # sample_function - Function returning a sample with syntax
-    # sample_function(1).
+    # sample_function - Function returning a sample with syntax 
+    # sample_fucntion()
     # acceptance_bound - Higher bound for accepting uniform draws,
-    # U <= f(x*) / (k*g(x*)) = acceptance_bound.
+    # U <= f(x*) / (k*g(x*)) = acceptance_bound(x*).
     draw_sample <- function(sample_function, acceptance_bound) {
         # Helper function that draws uniform samples until the acceptance bound
         # criteria is met.
