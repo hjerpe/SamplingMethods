@@ -1,4 +1,4 @@
-# Illustrate estimating pi using using the ratio A_circle / A_square = 1/4 where 
+# Illustrate estimating pi using using the ratio A_circle / A_square = pi/4 where 
 # we estimate the areas by drawing points  uniformly inside a unit square 
 # and estimating the A_circle by counting draws inside the circle.
 sample_function <- function(x) return (runif(n=2, min=-1, max=1))
