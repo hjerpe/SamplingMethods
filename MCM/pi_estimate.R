@@ -18,12 +18,18 @@ accepted_indices <- sapply(list_samples,
 accepted_samples <- samples[, accepted_indices==1]
 rejected_samples <- samples[, accepted_indices==0]
 
-# Illustrade the accepted and rejected samples
-plot(accepted_samples[1,], accepted_samples[2,], xlim=c(-1,1), ylim=c(-1,1), 
-     col='blue')
-points(rejected_samples[1,], rejected_samples[2,], col='red')
-
 # Estimate pi by the ratio of the number of accepted samples over the
 # total number of samples
 pi_estimate <- 4*dim(accepted_samples)[2] / N_SAMPLES
 print(pi_estimate - pi)
+
+# Illustrade the accepted and rejected samples
+plot(accepted_samples[1,], accepted_samples[2,], xlim=c(-1,1), ylim=c(-1,1), 
+     col='blue', 
+     main=paste('Estimating pi by the ratio of areas, pi_estimate = ',
+                pi_estimate), xlab='x', ylab='y')
+points(rejected_samples[1,], rejected_samples[2,], col='red')
+legend('topright', c('Accepted samples', 'Rejected samples'), 
+       col=c('blue', 'red'), lwd=1.5, bty='o', bg='white')
+dev.copy(jpeg, 'fig_estimate_pi.jpeg')
+dev.off()
