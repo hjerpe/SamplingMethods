@@ -29,7 +29,10 @@ plot(accepted_samples[1,], accepted_samples[2,], xlim=c(-1,1), ylim=c(-1,1),
      main=paste('Estimating pi by the ratio of areas, pi_estimate = ',
                 pi_estimate), xlab='x', ylab='y')
 points(rejected_samples[1,], rejected_samples[2,], col='red')
-legend('topright', c('Accepted samples', 'Rejected samples'), 
+n_rejected_samps <- dim(rejected_samples)[2]
+n_accepted_samps <- dim(accepted_samples)[2]
+legend('topright', c(paste(toString(n_accepted_samps), 'accepted samples'), 
+                     paste(toString(n_rejected_samps), 'rejected samples')), 
        col=c('blue', 'red'), lwd=1.5, bty='o', bg='white')
 dev.copy(jpeg, 'fig_estimate_pi.jpeg')
 dev.off()
