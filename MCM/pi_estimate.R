@@ -17,14 +17,14 @@ df_samples <- as.data.frame(do.call(rbind, list_samples))
 colnames(df_samples) <- c("x", "y")
 df_samples['label'] <- accepted_indices <- as.factor(sapply(
     list_samples, function(x) acceptance_bound(x[1], x[2])))
-levels(df_samples$accepted) <- c("rejected", "accepted")
+levels(df_samples$label) <- c("rejected", "accepted")
 
 # Estimate pi by the ratio of the number of accepted samples over the
 # total number of samples
-pi_estimate <- 4*sum(df_samples$accepted=='accepted') / N_SAMPLES
+pi_estimate <- 4*sum(df_samples$label=='accepted') / N_SAMPLES
 print(pi_estimate - pi)
 
-m <- ggplot(data = df_samples, aes(x=x, y=y, colour=label), titie = 'a') + 
+m <- ggplot(data = df_samples, aes(x=x, y=y, colour=label)) + 
     geom_point() + labs(title = paste(
         'Estimating pi by the ratio of areas, pi_estimate = ', 
         pi_estimate), xlab='x', ylab='y')
