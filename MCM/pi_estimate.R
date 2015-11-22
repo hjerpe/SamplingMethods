@@ -24,10 +24,10 @@ levels(df_samples$label) <- c("rejected", "accepted")
 pi_estimate <- 4*sum(df_samples$label=='accepted') / N_SAMPLES
 print(pi_estimate - pi)
 
-m <- ggplot(data = df_samples, aes(x=x, y=y, colour=label)) + 
+m <- ggplot(data = df_samples, aes(x = x, y = y, colour = label)) + 
     geom_point() + labs(title = paste(
         'Estimating pi by the ratio of areas, pi_estimate = ', 
-        pi_estimate), xlab='x', ylab='y')
+        pi_estimate), xlab = 'x', ylab = 'y')
 m
 dev.copy(jpeg, 'fig_estimate_pi.jpeg')
 dev.off()
