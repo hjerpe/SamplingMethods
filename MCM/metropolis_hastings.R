@@ -32,8 +32,9 @@ metropolis_hastings <- function(n_samples, burn_in, phi, proposal_kernel,
     # It is sufficient for the target density to only be specified up to a
     # normalizing constant i.e. target_density(x) = c * f(x).
     alpha <- function(X, X_draw) {
-        numerator <- target_density(X) * proposal_kernel(X_draw, X)
-        min(1 , (target_density(X_draw) * proposal_kernel(X, X_draw)) / numerator)
+        denominator <- target_density(X) * proposal_kernel(X_draw, X)
+        min(1, 
+            (target_density(X_draw) * proposal_kernel(X, X_draw)) / denominator)
     }
     
     draw_sample <- function(X) {
