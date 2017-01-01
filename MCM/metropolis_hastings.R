@@ -43,6 +43,7 @@ metropolis_hastings <- function(n_samples, burn_in, phi, proposal_kernel,
         if (runif(n=1, min=0, max=1) <= acceptance_bound) X_draw else X
     }
     # Generate markov-chain and calculate the estimate of E_f [phi(X)]
+    TOT_SAMPLES <- n_samples + burn_in
     markov_chain <- replicate(expr=0, n=n_samples)
     markov_chain <- unlist(lapply(FUN=draw_sample, X=markov_chain))
     mean(phi(markov_chain[(burn_in+1):TOT_SAMPLES]))
